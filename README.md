@@ -81,4 +81,4 @@ Name: ManifestationTests
 
 Using the flag `--dump` with dump the entire `Manifest` object into your console, providing a lot of detail.
 
-You might be asking why the hell the entirety of swift-package-manager is included in this repo. SPM pins its dependency on Swift Argument Parser to a version previous to argument parser's additional of `AsyncParsableCommand`. Since I was too lazy to use `CommandLine` APIs to make this, I just pulled in swift-package-manager locally, changed it to depend on the `main` branch of Swift Argument Parser, and it worked 🤷.
+You might be asking why the hell the entirety of swift-package-manager is included in this repo. SPM pins its dependency on Swift Argument Parser to a version previous to argument parser's addition of `AsyncParsableCommand`. Since I was too lazy to use `CommandLine` APIs to make this, I just pulled in swift-package-manager locally, changed it to depend on the `main` branch of Swift Argument Parser, and it worked 🤷.
