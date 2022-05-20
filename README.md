@@ -81,3 +81,8 @@ Name: ManifestationTests
 ```
 
 Using the flag `--dump` with dump the entire `Manifest` object into your console, providing a lot of detail.
+
+## Contributions
+
+Contributions are absolutely welcome. Open an issue to discuss or a PR directly.
+Planned feature additions are tracked in Issues.
