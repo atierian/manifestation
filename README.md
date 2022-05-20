@@ -23,13 +23,14 @@ e.g.
 ```
 OVERVIEW: Parse a Package.swift manifest.
 
-USAGE: manifestation <path> [--dump]
+USAGE: manifestation <path> [--dump] [--verbose]
 
 ARGUMENTS:
-  <path>                  The path to the Package.swift.
+  <path>                  The absolute path to the Package.swift. e.g. '~/Foo/Bar
 
 OPTIONS:
   -d, --dump              Dump the entire package manifest
+  -v, --verbose           Verbose logging. This will print all events from the 'ObservabilitySystem'
   -h, --help              Show help information.
 ```
 
@@ -37,7 +38,7 @@ OPTIONS:
 Provide the **absolute** path to the directory containing your `Package.swift`.
 For example, if you have a `Package.swift` here `/Users/Foo/Projects/FooKit/Package.swift`, you would run:
 
-`manifestation /Users/Foo/Projects/FooKit` or `manifestation ~/Projects/FooKit`
+`manifestation /Users/Foo/Projects/FooKit --verbose` or `manifestation ~/Projects/FooKit --verbose`
 
 Here's the output from the `Package.swift` of `manifestation` as an example:
 ```
