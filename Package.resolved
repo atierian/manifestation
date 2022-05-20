@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "branch" : "main",
+        "revision" : "68b94a4c7341d9bbb11a5b882cd37ea4f1e5a508"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections.git",
+      "state" : {
+        "revision" : "48254824bb4248676bf7ce56014ff57b142b77eb",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
+        "version" : "1.1.7"
+      }
+    },
+    {
+      "identity" : "swift-driver",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-driver.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "45ae4a64897faee35f388aa23687d5c2daa829d0"
+      }
+    },
+    {
+      "identity" : "swift-llbuild",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-llbuild.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "40ee0e2a91d1bd3e37beb83baaea927f86346f1d"
+      }
+    },
+    {
+      "identity" : "swift-system",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-system.git",
+      "state" : {
+        "revision" : "836bc4557b74fe6d2660218d56e3ce96aff76574",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swift-tools-support-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-tools-support-core.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "babdefd2f6e2d1592a3cdfe2bee3e602f826f2e8"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+        "version" : "4.0.6"
+      }
+    }
+  ],
+  "version" : 2
+}
