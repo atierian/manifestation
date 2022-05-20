@@ -14,8 +14,8 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            name: "SwiftPM",
-            path: "swift-package-manager"
+            url: "https://github.com/atierian/swift-package-manager",
+            branch: "main"
         ),
         .package(
             url: "https://github.com/apple/swift-argument-parser",
@@ -32,7 +32,7 @@ let package = Package(
                 ),
                 .product(
                     name: "SwiftPM",
-                    package: "SwiftPM"
+                    package: "swift-package-manager"
                 )
             ]
         ),

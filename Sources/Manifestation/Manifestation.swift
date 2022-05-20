@@ -12,15 +12,24 @@ struct Manifestation: AsyncParsableCommand {
         abstract: "Parse a Package.swift manifest."
     )
     
-    @Argument(help: "The path to the Package.swift.")
+    @Argument(help: "The absolute path to the Package.swift. e.g. '~/Foo/Bar")
     private var path: String
 
     @Flag(name: .shortAndLong, help: "Dump the entire package manifest")
     private var dump = false
     
+    @Flag(name: .shortAndLong, help: "Verbose logging. This will print all events from the 'ObservabilitySystem'")
+    private var verbose = false
+    
     mutating func run() async throws {
         let packagePath = AbsolutePath(path)
-        let observability = ObservabilitySystem({ print("\($0): \($1)") })
+        
+        let observabilityHandler: (ObservabilityScope, Basics.Diagnostic) -> Void = verbose
+        ? { print("\($0): \($1)") }
+        : { _, _ in }
+
+        let observability = ObservabilitySystem(observabilityHandler)
+        
         let workspace = try Workspace(forRootPackage: packagePath)
         
         let manifest = try await workspace.loadRootManifest(
@@ -77,17 +86,16 @@ extension Formatting where A == [ProductDescription], B == [String] {
 extension Formatting where A == [TargetDescription], B == [String] {
     static let targets = Self { targets in
         func parseDependencies(_ deps: [TargetDescription.Dependency]) -> String {
-            deps.reduce("[ ") {
+            deps.reduce("[  ") {
                 switch $1 {
                 case .target(let name, _),
                         .byName(let name, _),
                         .product(let name, _, _, _):
                     return $0 + name + ", "
                 }
-                
             }
             .dropLast(2)
-            + " ]"
+            + "  ]"
         }
         
         return targets.map {

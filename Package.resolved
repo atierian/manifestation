@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "swift-package-manager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/atierian/swift-package-manager",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6e2dced25e3bfcab3c012a2275d8ccbe395bf2e4"
+      }
+    },
+    {
       "identity" : "swift-system",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system.git",
