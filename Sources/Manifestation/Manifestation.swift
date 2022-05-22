@@ -18,18 +18,15 @@ struct Manifestation: AsyncParsableCommand {
     @Flag(name: .shortAndLong, help: "Dump the entire package manifest")
     private var dump = false
     
-    @Flag(name: .shortAndLong, help: "Verbose logging. This will print all events from the 'ObservabilitySystem'")
+    @Flag(help: "Verbose logging. This will print all events from the 'ObservabilitySystem'")
     private var verbose = false
     
     mutating func run() async throws {
-        let packagePath = AbsolutePath(path)
-        
-        let observabilityHandler: (ObservabilityScope, Basics.Diagnostic) -> Void = verbose
-        ? { print("\($0): \($1)") }
-        : { _, _ in }
-
+        let observabilityHandler = Logging(verbose: verbose)
+            .observabilityHandler
         let observability = ObservabilitySystem(observabilityHandler)
         
+        let packagePath = AbsolutePath(path)
         let workspace = try Workspace(forRootPackage: packagePath)
         
         let manifest = try await workspace.loadRootManifest(
@@ -47,16 +44,20 @@ struct Manifestation: AsyncParsableCommand {
             observabilityScope: observability.topScope
         )
         
-        print(">>>>> Products <<<<<")
-        Formatting.products.format(manifest.products)
-            .forEach { print($0) }
+        outputToConsole(
+            from: manifest.products,
+            formatting: .products,
+            header: "Products"
+        )
         
-        print(">>>>> Targets <<<<<")
-        Formatting.targets.format(manifest.targets)
-            .forEach { print($0) }
+        outputToConsole(
+            from: manifest.targets,
+            formatting: .targets,
+            header: "Targets"
+        )
         
         let numberOfFiles = graph.reachableTargets
-            .reduce(0) { $0 + $1.sources.paths.count }
+            .sum(initial: 0, adding: \.sources.paths.count)
         print("Total number of source files (including dependencies):", numberOfFiles)
         
         if dump {
@@ -64,52 +65,15 @@ struct Manifestation: AsyncParsableCommand {
             Swift.dump(manifest)
         }
     }
-}
-
-struct Formatting<A, B> {
-    let format: (A) -> B
-}
-
-extension Formatting where A == [ProductDescription], B == [String] {
-    static let products = Self { products in
-        products.map {
-            """
-            Name: \($0.name)
-                - Type: \($0.type)
-                - Targets: \($0.targets)
-
-            """
-        }
+    
+    private func outputToConsole<T>(
+        from input: T,
+        formatting: Formatting<T, [String]>,
+        header: String
+    ) {
+        print(">>>>> \(header) <<<<<")
+        formatting.format(input)
+            .forEach { print($0) }
     }
 }
 
-extension Formatting where A == [TargetDescription], B == [String] {
-    static let targets = Self { targets in
-        func parseDependencies(_ deps: [TargetDescription.Dependency]) -> String {
-            deps.reduce("[  ") {
-                switch $1 {
-                case .target(let name, _),
-                        .byName(let name, _),
-                        .product(let name, _, _, _):
-                    return $0 + name + ", "
-                }
-            }
-            .dropLast(2)
-            + "  ]"
-        }
-        
-        return targets.map {
-            """
-            Name: \($0.name)
-                - Type: \($0.type)
-                - Dependencies: \(parseDependencies($0.dependencies))
-                - Path: \($0.path ?? "")
-                - URL: \($0.url ?? "")
-                - Settings: \($0.settings)
-                - Exclude: \($0.exclude)
-                - Resources: \($0.resources)
-
-            """
-        }
-    }
-}
